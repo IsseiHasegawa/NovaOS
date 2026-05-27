@@ -1,4 +1,9 @@
-# Build artifacts
+*.EFI
+*.efi
+*.o
+*.img
+mnt/
+OVMF_VARS.fd# Build artifacts
 *.o
 *.efi
 *.img
