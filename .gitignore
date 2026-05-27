@@ -1,0 +1,11 @@
+# Build artifacts
+*.o
+*.efi
+*.img
+
+# Mount directories
+mnt/
+day01/c/mnt/
+
+# OVMF variable files
+OVMF_VARS.fd
