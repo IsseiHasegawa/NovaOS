@@ -17,5 +17,5 @@ SECTIONS
     .bss    : { *(.bss .bss.*) *(COMMON) }
 
     . = ALIGN(16);
-    PROVIED(end = .);
+    PROVIDE(end = .);
 }
