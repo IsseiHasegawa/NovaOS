@@ -15,4 +15,4 @@ hang:
 .align 16
 stack_bottom:
     .space 16384   #16 KiB stack
-stack-top:
+stack_top:
