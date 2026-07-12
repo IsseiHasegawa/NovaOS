@@ -1,7 +1,7 @@
 #include "uart.h"
 
-#define UARTO 0x10000000L
-#define UART_THR (UARTO + 0x00) /* transmit holding register */
+#define UART0 0x10000000L
+#define UART_THR (UART0 + 0x00) /* transmit holding register */
 
 void uart_putc(char c) {
     volatile uint8_t *thr = (volatile uint8_t *)UART_THR;
