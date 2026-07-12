@@ -10,7 +10,7 @@ void uart_putc(char c) {
 
 void uart_puts(const char *s) {
     while (*s) {
-        uart_puts(*s++);
+        uart_putc(*s++);
     }
 }
 
