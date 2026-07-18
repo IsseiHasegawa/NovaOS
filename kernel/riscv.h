@@ -132,6 +132,6 @@ static inline void w_stimecmp(uint64_t x) {
 
 /* scause: top bit set - interrupt, low bits = code */
 #define SCAUSE_INTERRUPT (1UL << 63)
-#define IRQ_S_TIME 5
+#define IRQ_S_TIMER 5
 
 #endif

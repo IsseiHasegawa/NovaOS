@@ -1,22 +1,25 @@
 #include <stdint.h>
+#include "riscv.h"
+#include "uart.h"
 
-#define UART0 0x10000000L
-#define UART_THR (UART0 + 0x00) /* transmit holding register */
-
-static void uart_putc(char c) {
-    volatile uint8_t *thr = (volatile uint8_t *)UART_THR;
-    *thr = (uint8_t)c;
-}
-
-static void uart_puts(const char *s) {
-    while (*s) {
-        uart_putc(*s++);
-    }
-}
+extern void kernelvec(void);
+void timer_init(void);
 
 void kmain(void) {
     uart_puts("Hello from my kernel!\n");
+
+    /* 1. register the emergency cantact: every trap jumps to kernelvec */
+    w_stvec((uint64_t)kernelvec);
+
+    /* 2. arm the first timer deadline (1 second from now) */
+    timer_init();
+
+    /* 3. switches NO: pre-source (timer), then the master switch */
+    w_sie(r_sie() | SIE_STIE); /* enable timer interrupts */
+    w_sstatus(r_sstatus() | SSTATUS_SIE); /* enable interrupts */
+
+
     for (;;) {
-        /* nothing yet */
+        asm volatile("wfi"); /* wait for interrupt */
     }
 }
