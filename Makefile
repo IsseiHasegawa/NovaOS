@@ -10,7 +10,7 @@ CFLAGS  := --target=$(TARGET) -march=rv64g -mabi=lp64 \
 
 LDFLAGS := -T kernel.ld
 
-OBJS := boot.o main.o
+OBJS := boot.o kernelvec.o uart.o trap.o main.o
 
 kernel.elf: $(OBJS) kernel.ld
 	$(LD) $(LDFLAGS) -o $@ $(OBJS)
@@ -18,7 +18,16 @@ kernel.elf: $(OBJS) kernel.ld
 boot.o: boot.s
 	$(CC) $(CFLAGS) -c boot.s -o boot.o
 
-main.o: main.c
+kernelvec.o: kernelvec.s
+	$(CC) $(CFLAGS) -c kernelvec.s -o kernelvec.o
+
+uart.o: uart.c uart.h
+	$(CC) $(CFLAGS) -c uart.c -o uart.o
+
+trap.o: trap.c riscv.h uart.h
+	$(CC) $(CFLAGS) -c trap.c -o trap.o
+
+main.o: main.c riscv.h uart.h
 	$(CC) $(CFLAGS) -c main.c -o main.o
 
 run: kernel.elf
